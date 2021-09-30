@@ -22,8 +22,8 @@ contract SupplyChain {
     // <struct Item: name, sku, price, state, seller, and buyer>
     struct Item {
         string name;
-        uint256 sku;
-        uint256 price;
+        uint sku;
+        uint price;
         State state;
         address payable seller;
         address payable buyer;
@@ -72,7 +72,7 @@ contract SupplyChain {
         _;
         uint _price = items[_sku].price;
         uint amountToRefund = msg.value - _price;
-        items[_sku].buyer.transfer(amountToRefund);
+        items[_sku].buyer.call.value(amountToRefund)("");
     }
 
     // For each of the following modifiers, use what you learned about modifiers
